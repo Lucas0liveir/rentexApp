@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons'
-import { FlatList } from 'react-native';
+import { BackHandler, FlatList } from 'react-native';
 import { useTheme } from 'styled-components';
 import { BackButton } from '../../components/BackButton';
 import { Car } from '../../components/Car';
@@ -24,6 +24,7 @@ import {
     CarFooterDate,
 } from './styles';
 import { Load } from '../../components/Load';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 interface CarProps {
     id: string;
@@ -56,6 +57,13 @@ export function MyCars() {
         fetchCars()
     }, [])
 
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => { 
+            navigation.goBack()
+            return false
+        })
+    }, [])
+
     return (
         <Container>
             <Header>
@@ -76,7 +84,7 @@ export function MyCars() {
                     <AppointmentsTitle>Agendamentos feitos</AppointmentsTitle>
                     <AppointmentsQuantity>{cars.length}</AppointmentsQuantity>
                 </Appointments>
-                {loading ? <Load /> :
+                {loading ? <LoadAnimation /> :
                     <FlatList
                         data={cars}
                         keyExtractor={item => item.id}

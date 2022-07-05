@@ -38,7 +38,7 @@ import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 import { getPlatformDate } from '../../utils/getPlatformDate';
 import { format } from 'date-fns';
 import { api } from '../../services/api';
-import { Alert } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 
 
 interface Params {
@@ -99,6 +99,11 @@ export function SchedulingDetails() {
     }, [])
     return (
         <Container>
+            <StatusBar
+                barStyle='light-content'
+                backgroundColor={'black'}
+                translucent
+            />
             <Header>
                 <BackButton
                     onPress={() => { navigation.goBack() }} />
