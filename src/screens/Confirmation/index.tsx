@@ -10,39 +10,44 @@ import {
     Footer,
 } from './styles';
 import { ConfirmButton } from '../../components/ConfirmButton';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
+interface Params {
+    title: string;
+    message: string;
+    nextScreenRoute: string;
+}
 
-export function SchedulingComplete() {
+export function Confirmation() {
 
     const { width } = useWindowDimensions()
 
+    const route = useRoute()
     const navigation = useNavigation<any>()
-
-    function hanleConfirm() {
-        navigation.navigate('Home')
-      }
+    const { title, message, nextScreenRoute } = route.params as Params
     
+    function hanleConfirm() {
+        navigation.navigate(nextScreenRoute)
+    }
+
 
     return (
         <Container>
-            <StatusBar barStyle='light-content' translucent backgroundColor={'transparent'}/>
+            <StatusBar barStyle='light-content' translucent backgroundColor={'transparent'} />
             <LogoBrandSvg
                 width={width}
             />
             <Content>
                 <DoneSvg width={80} height={80} />
-                <Title>Carro Alugado!</Title>
+                <Title>{title}</Title>
 
                 <Message>
-                    Agora você só precisa ir {'\n'}
-                    até a concessionária da RENTX {'\n'}
-                    pegar o seu automóvel.
+                    {message}
                 </Message>
             </Content>
 
             <Footer>
-                <ConfirmButton onPress={hanleConfirm} title='OK'/>
+                <ConfirmButton onPress={hanleConfirm} title='OK' />
             </Footer>
         </Container>
     );

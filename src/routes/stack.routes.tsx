@@ -4,23 +4,35 @@ import { Home } from "../screens/Home";
 import { CarDetails } from "../screens/CarDetails";
 import { SchedulingDetails } from "../screens/SchedulingDetails";
 import { Scheduling } from "../screens/Scheduling";
-import { SchedulingComplete } from "../screens/SchedulingComplete";
+import { Confirmation } from "../screens/Confirmation";
 import { MyCars } from "../screens/MyCars";
 import { Splash } from "../screens/Splash";
+import { SignIn } from "../screens/SignIn";
+import { SignUp } from "../screens/SignUp";
+import { SignUpFirstStep } from "../screens/SignUp/SignUpFirstStep";
+import { SignUpSecondStep } from "../screens/SignUp/SignUpSecondStep";
 
 const { Navigator, Screen } = createStackNavigator()
 
 export function StackRoutes() {
     return (
         <Navigator
-            initialRouteName="Splash"
+            initialRouteName="Home"
             screenOptions={{
                 headerShown: false
             }}
         >
             <Screen
-                name="Splash"
-                component={Splash}
+                name="SignUpFirstStep"
+                component={SignUpFirstStep}
+            />
+              <Screen
+                name="SignUpSecondStep"
+                component={SignUpSecondStep}
+            />
+            <Screen
+                name="SignIn"
+                component={SignIn}
             />
             <Screen
                 name="Home"
@@ -42,8 +54,8 @@ export function StackRoutes() {
                 component={SchedulingDetails}
             />
             <Screen
-                name="SchedulingComplete"
-                component={SchedulingComplete}
+                name="Confirmation"
+                component={Confirmation}
             />
             <Screen
                 name="MyCars"
