@@ -25,6 +25,7 @@ import {
 } from './styles';
 import { Load } from '../../components/Load';
 import { LoadAnimation } from '../../components/LoadAnimation';
+import { useAuth } from '../../hooks/auth';
 
 interface CarProps {
     id: string;
@@ -35,6 +36,7 @@ interface CarProps {
 }
 
 export function MyCars() {
+    const { user } = useAuth()
 
     const theme = useTheme()
     const navigation = useNavigation<any>()
@@ -45,7 +47,7 @@ export function MyCars() {
     useEffect(() => {
         async function fetchCars() {
             try {
-                const response = await api.get('/schedules_byuser?user_id=1')
+                const response = await api.get(`/rental`)
                 setCars(response.data)
             } catch (e: any) {
                 console.log(e)
@@ -55,13 +57,6 @@ export function MyCars() {
         }
 
         fetchCars()
-    }, [])
-
-    useEffect(() => {
-        BackHandler.addEventListener('hardwareBackPress', () => { 
-            navigation.goBack()
-            return false
-        })
     }, [])
 
     return (

@@ -123,7 +123,7 @@ export function Scheduling() {
         <Button
           onPress={hanleConfirmRental}
           title='Confirmar'
-          enabled={!!rentalPeriod.startFormatted}
+          disabled={!rentalPeriod.startFormatted}
         />
       </Footer>
 

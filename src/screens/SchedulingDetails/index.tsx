@@ -59,7 +59,7 @@ export function SchedulingDetails() {
     const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod)
 
     const { car, dates } = route.params as Params
-    const rentTotal = Number(dates.length * car.rent.price)
+    const rentTotal = Number(dates.length * car.price)
 
     async function handleConfirmRental() {
         setLoading(true)
@@ -71,8 +71,7 @@ export function SchedulingDetails() {
             ...dates,
         ]
 
-        await api.post(`schedules_byuser`, {
-            user_id: 1,
+        await api.post(`rental`, {
             car,
             startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
             endDate: format(getPlatformDate(new Date(dates[dates.length - 1])), 'dd/MM/yyyy')
@@ -129,8 +128,8 @@ export function SchedulingDetails() {
                         </Name>
                     </Description>
                     <Rent>
-                        <Period>{car.rent.period}</Period>
-                        <Price>R$ {car.rent.price}</Price>
+                        <Period>{car.period}</Period>
+                        <Price>R$ {car.price}</Price>
                     </Rent>
                 </Details>
                 <Accessories>
@@ -176,7 +175,7 @@ export function SchedulingDetails() {
                 <RentalPrice>
                     <RentalPriceLabel>TOTAL</RentalPriceLabel>
                     <RentalPriceDetails>
-                        <RentalPriceQuota>{`R$ ${car.rent.price} x${dates.length} diárias`}</RentalPriceQuota>
+                        <RentalPriceQuota>{`R$ ${car.price} x${dates.length} diárias`}</RentalPriceQuota>
                         <RentalPriceTotal>R$ {rentTotal}</RentalPriceTotal>
                     </RentalPriceDetails>
                 </RentalPrice>

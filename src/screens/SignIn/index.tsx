@@ -20,10 +20,12 @@ import {
     Footer,
     Form
 } from './styles';
+import { useAuth } from "../../hooks/auth";
 
 
 export function SignIn() {
     const navigation = useNavigation<any>()
+    const { signIn } = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -43,6 +45,9 @@ export function SignIn() {
                     .required('A senha é obrigatória')
             })
             await schema.validate({ email, password })
+
+            await signIn({ email, password })
+            
         } catch (error) {
             if (error instanceof Yup.ValidationError) {
                 Alert.alert('opa', error.message)
@@ -98,7 +103,7 @@ export function SignIn() {
                         <Button
                             title="Login"
                             onPress={handleSignIn}
-                            disabled={true}
+                            disabled={false}
                             loading={false}
                         />
 
