@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { RectButton } from 'react-native-gesture-handler';
-import Animated, {
-  useSharedValue
-} from 'react-native-reanimated';
+import { useNetInfo } from '@react-native-community/netinfo'
 
-import { StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Logo from '../../assets/logo.svg'
 import { Car } from '../../components/Car';
@@ -23,6 +20,7 @@ import { LoadAnimation } from '../../components/LoadAnimation';
 
 export function Home() {
   const navigation = useNavigation<any>()
+  const netInfo = useNetInfo()
   const [cars, setCars] = useState<CarDTO[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -31,19 +29,34 @@ export function Home() {
   }
 
   useEffect(() => {
+    let isMounted = true
+
     async function fetchCars() {
       try {
         const response = await api.get('/cars')
-        setCars(response.data)
+        if (isMounted)
+          setCars(response.data)
       } catch (e: any) {
         console.log(e)
       } finally {
-        setLoading(false)
+        if (isMounted)
+          setLoading(false)
       }
     }
 
     fetchCars()
+    return () => {
+      isMounted = false
+    }
   }, []);
+
+  useEffect(() => {
+    if (netInfo.isConnected) {
+      Alert.alert('Conectado')
+    } else {
+      Alert.alert('Desconectado')
+    }
+  }, [netInfo.isConnected])
 
   return (
     <Container>

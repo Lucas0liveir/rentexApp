@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { TextInput } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";

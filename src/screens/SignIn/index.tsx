@@ -22,7 +22,6 @@ import {
 } from './styles';
 import { useAuth } from "../../hooks/auth";
 
-
 export function SignIn() {
     const navigation = useNavigation<any>()
     const { signIn } = useAuth()
