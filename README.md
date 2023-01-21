@@ -1,4 +1,4 @@
-# RenteX
+# RentX
 Aplicativo para aluguel de automoveis.
 
 Pricipais bibliotecas utilizadas:
